@@ -2,7 +2,7 @@
   "name": "@ayden94/empty-boundary",
   "version": "0.1.0",
   "private": true,
-  "description": "Typed empty-state signals and a Suspensive boundary for React.",
+  "description": "Typed empty-state signals and a React-only empty boundary.",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -27,18 +27,16 @@
     "build": "tsc -p tsconfig.build.json",
     "lint": "oxlint",
     "test": "pnpm run build && pnpm run test:runtime && pnpm run test:types",
-    "test:runtime": "tsc -p tsconfig.runtime.json && node --import ./.test-dist/tests/setup-dom.js --test .test-dist/tests/*.test.js",
+    "test:runtime": "tsc -p tsconfig.runtime.json && node --test-timeout=10000 --import ./.test-dist/tests/setup-dom.js --test .test-dist/tests/*.test.js",
     "test:types": "tsc -p tsconfig.tests.json",
     "check": "pnpm run lint && pnpm test",
     "prepack": "pnpm run build"
   },
   "peerDependencies": {
-    "@suspensive/react": "^3.21.4",
     "react": "^19.0.0"
   },
   "devDependencies": {
     "@happy-dom/global-registrator": "^20.0.0",
-    "@suspensive/react": "3.21.4",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",

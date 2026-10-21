@@ -1,14 +1,14 @@
 # EmptyBoundary
 
-Suspensive와 함께 사용하는 React 빈 상태 경계입니다.
+React만으로 동작하는 빈 상태 경계입니다.
 조회 성공 데이터가 비어 있을 때 `EmptyData` 신호를 던져
 상위 `EmptyBoundary`에서 빈 화면을 렌더링합니다.
 
 - ESM 패키지와 TypeScript 선언 파일 제공
-- React 19, `@suspensive/react` 3.21.4 이상을 peer dependency로 사용
+- React 19만 peer dependency로 사용
 - 타입 가드 기반 반환 타입 좁히기
-- Query 라이브러리에는 직접 의존하지 않음
-- 비공개 저장소용 패키지이며 npm registry에는 게시하지 않음
+- Suspensive와 Query 라이브러리에 의존하지 않음
+- GitHub 공개 저장소이며 npm registry에는 게시하지 않음
 
 ## 개발
 
@@ -45,7 +45,7 @@ pnpm add file:../EmptyBoundary
 pnpm add /path/to/ayden94-empty-boundary-0.1.0.tgz
 ```
 
-소비 프로젝트에는 peer dependency인 `react`와 `@suspensive/react`도 필요합니다.
+소비 프로젝트에는 peer dependency인 `react`가 필요합니다.
 패키지는 외부 라이브러리를 번들에 포함하지 않으며 `dist`와 README만 배포합니다.
 로컬 파일 의존성을 사용하다 패키지를 수정했다면 다시 빌드하고 소비 프로젝트에서 재설치합니다.
 
@@ -77,6 +77,7 @@ function Items({ data }: { readonly data: readonly Item[] }) {
 판정 함수는 **`isNonEmpty` 방향**입니다. true면 데이터를 그대로 반환하고
 false면 Error를 상속하지 않는 `EmptyData` 인스턴스를 던집니다.
 `EmptyBoundary`는 이 인스턴스만 포착하며 다른 예외는 상위 ErrorBoundary로 전달합니다.
+내부 React 클래스 경계가 포착과 초기화를 직접 처리합니다.
 
 ## API
 
@@ -124,6 +125,9 @@ null과 undefined만 제외합니다. `0`, `false`, `''`는 유효한 값으로 
 | `resetKeys` | 요소가 달라지면 빈 경계를 초기화하는 키 배열 |
 | `onReset` | 수동 또는 키 변경 초기화 시 호출하는 콜백 |
 
+`fallback={null}`은 의도적으로 아무 UI도 표시하지 않습니다.
+fallback이 undefined이면 원래 EmptyData를 상위 오류 경계로 전달합니다.
+
 ```tsx
 <EmptyBoundary
   resetKeys={[data]}
@@ -154,8 +158,10 @@ throw new EmptyData();
 이 신호를 이벤트 핸들러나 타이머에서 던져도 React boundary가 포착하지 않습니다.
 경계 아래 자식 컴포넌트의 렌더 중에 던져야 합니다.
 
-## SuspenseQuery 연동
+## SuspenseQuery 연동 (선택 사항)
 
+아래는 사용하는 앱이 Suspensive를 선택한 경우의 연동 예제입니다.
+이 예제에 등장하는 Suspensive 패키지는 EmptyBoundary의 의존성이 아닙니다.
 `SuspenseQuery`를 사용하는 프로젝트에서는 Query 구독이 빈 fallback에서도
 살아 있도록 render prop **안쪽에** EmptyBoundary를 배치합니다.
 

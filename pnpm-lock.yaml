@@ -11,9 +11,6 @@ importers:
       '@happy-dom/global-registrator':
         specifier: ^20.0.0
         version: 20.14.6
-      '@suspensive/react':
-        specifier: 3.21.4
-        version: 3.21.4(react@19.2.8)
       '@types/node':
         specifier: ^24.13.3
         version: 24.19.2
@@ -164,11 +161,6 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@suspensive/react@3.21.4':
-    resolution: {integrity: sha512-o5otqY2qy5HejEx2zt4O/ZlCvwNAWT/nFY8H3wodXUePR0RoyGPudjNne3lYPKR54v2zezV5eTOsIIEgMehhKg==}
-    peerDependencies:
-      react: ^18 || ^19
-
   '@types/node@24.19.2':
     resolution: {integrity: sha512-93d49wCWJkCyN87MxLpNN6KXPCwFw7bVUg79mGUV1OS40JGWwVCr8n61DXCSqz7CV6/VfPkb7xec7uP2M+QHWQ==}
 
@@ -316,10 +308,6 @@ snapshots:
 
   '@oxlint/binding-win32-x64-msvc@1.89.0':
     optional: true
-
-  '@suspensive/react@3.21.4(react@19.2.8)':
-    dependencies:
-      react: 19.2.8
 
   '@types/node@24.19.2':
     dependencies:
